@@ -141,7 +141,17 @@ public class FirebaseRepository {
     }
 
     public void getEvent(String eventId, SimpleCallback<Event> callback) {
-        database.child("events").child(eventId).addListenerForSingleValueEvent(new ValueEventListener() {
+        if (eventId == null || eventId.trim().isEmpty() ||
+                eventId.contains(".") || eventId.contains("#") ||
+                eventId.contains("$") || eventId.contains("[") ||
+                eventId.contains("]") || eventId.contains("/")) {
+            if (callback != null) {
+                callback.onSuccess(null);
+            }
+            return;
+        }
+
+        database.child("events").child(eventId.trim()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.exists()) {

@@ -246,11 +246,23 @@ public class QRScannerFragment extends Fragment {
     }
 
     private String parseEventId(String rawValue) {
+        if (rawValue == null) return "";
         try {
             String trimmed = rawValue.trim();
             if (trimmed.startsWith("{")) {
                 JSONObject json = new JSONObject(trimmed);
                 return json.optString("eventId", trimmed);
+            } else if (trimmed.startsWith("http://") || trimmed.startsWith("https://") || trimmed.startsWith("appcollage://")) {
+                android.net.Uri uri = android.net.Uri.parse(trimmed);
+                String eventId = uri.getQueryParameter("eventId");
+                if (eventId != null && !eventId.trim().isEmpty()) {
+                    return eventId.trim();
+                }
+                String lastSegment = uri.getLastPathSegment();
+                if (lastSegment != null && !lastSegment.trim().isEmpty()) {
+                    return lastSegment.trim();
+                }
+                return trimmed;
             } else {
                 return trimmed;
             }
