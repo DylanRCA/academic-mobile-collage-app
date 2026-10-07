@@ -50,7 +50,7 @@
             app:boxCornerRadiusTopStart="4dp"
             app:boxStrokeColor="@color/brand_accent"
             app:counterEnabled="true"
-            app:counterMaxLength="80"
+            app:counterMaxLength="200"
             app:counterTextColor="@color/text_secondary_dark"
             app:hintTextColor="@color/brand_accent_muted"
             app:layout_constraintTop_toTopOf="parent">
@@ -60,8 +60,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textCapSentences"
-                android:maxLength="80"
-                android:maxLines="2"
+                android:maxLength="200"
+                android:maxLines="3"
                 android:textColor="@color/white" />
 
         </com.google.android.material.textfield.TextInputLayout>

@@ -64,7 +64,7 @@ El sistema es una solución móvil diseñada para capturar la interacción de lo
 4. **Revisión y Composición del Pie de Foto:**
     * Se visualiza la imagen capturada.
     * A la izquierda inferior se despliega el logotipo oficial del evento (obtenido de `events/{eventId}`).
-    * A la derecha inferior se habilita un campo de entrada para un mensaje dedicatorio opcional (máximo 80 caracteres).
+    * A la derecha inferior se habilita un campo de entrada para un mensaje dedicatorio opcional (máximo 200 caracteres).
     * Opciones: **Reintentar** (descarta y vuelve a disparador) o **Enviar**.
 5. **Compresión y Envío:**
     * La app redimensiona la imagen a un máximo de 1024x768 px y aplica compresión JPEG (calidad 60%–70%).
