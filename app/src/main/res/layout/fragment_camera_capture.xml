@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/previewView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/tvEventName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/shape_overlay_card"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="10dp"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/btnGallery"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="24dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardBackgroundColor="@color/overlay_card_bg"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/btnShutter"
+        app:layout_constraintEnd_toStartOf="@id/btnShutter"
+        app:layout_constraintTop_toTopOf="@id/btnShutter"
+        app:strokeColor="@color/input_border_unfocused"
+        app:strokeWidth="1dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:contentDescription="Gallery"
+            android:src="@drawable/ic_gallery" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/btnShutter"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginBottom="48dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="36dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="@color/brand_accent"
+        app:strokeWidth="4dp">
+
+        <ProgressBar
+            android:id="@+id/progressBarCapturing"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/brand_accent"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/btnSwitchCamera"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardBackgroundColor="@color/overlay_card_bg"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/btnShutter"
+        app:layout_constraintStart_toEndOf="@id/btnShutter"
+        app:layout_constraintTop_toTopOf="@id/btnShutter"
+        app:strokeColor="@color/input_border_unfocused"
+        app:strokeWidth="1dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:contentDescription="Switch Camera"
+            android:src="@drawable/ic_switch_camera" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/tvCaptureError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/text_error"
+        android:textSize="13sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/btnShutter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Failed to capture photo"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

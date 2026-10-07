@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardPost"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp"
+    app:cardBackgroundColor="@color/surface_dark"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp"
+    app:strokeColor="@color/brand_accent"
+    app:strokeWidth="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivPostImage"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:contentDescription="Collage Photo"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/tvPostMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#B30F172A"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:paddingHorizontal="6dp"
+            android:paddingVertical="4dp"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="¡Felicitaciones a los novios!"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/ivMessageIndicator"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="6dp"
+            android:background="@drawable/shape_overlay_card"
+            android:contentDescription="Mensaje adjunto"
+            android:padding="3dp"
+            android:src="@drawable/ic_message_indicator"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

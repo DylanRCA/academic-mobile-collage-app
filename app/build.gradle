@@ -1,0 +1,74 @@
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.kotlin.android)
+}
+
+android {
+    namespace 'com.example.appcollagefotos'
+    compileSdk 36 // O 34, según los SDKs que tengas instalados
+
+    defaultConfig {
+        applicationId "com.example.appcollagefotos"
+        minSdk 24
+        targetSdk 36
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    buildFeatures {
+        viewBinding true
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+}
+
+dependencies {
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.activity.ktx
+    implementation 'androidx.fragment:fragment-ktx:1.8.5'
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
+    implementation 'androidx.core:core-ktx:1.15.0'
+    // Provee ListenableFuture para CameraX
+    implementation 'com.google.guava:guava:33.3.1-android'
+    // Opcional para extensiones suspend/await con corrutinas de Kotlin:
+    implementation 'androidx.concurrent:concurrent-futures-ktx:1.2.0'
+    // CameraX
+    implementation libs.camerax.core
+    implementation libs.camerax.camera2
+    implementation libs.camerax.lifecycle
+    implementation libs.camerax.view
+    implementation libs.guava
+    // MLKit Barcode
+    implementation libs.mlkit.barcode
+
+    // Firebase
+    implementation platform(libs.firebase.bom)
+    implementation libs.firebase.auth
+    implementation libs.firebase.database
+
+    // Coroutines
+    implementation libs.coroutines.android
+    implementation libs.coroutines.playservices
+    implementation libs.core.ktx
+
+    // Testing
+    testImplementation libs.junit
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
+}

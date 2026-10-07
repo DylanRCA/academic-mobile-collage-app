@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "784330097208",
+    "project_id": "appcollagefotos",
+    "storage_bucket": "appcollagefotos.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784330097208:android:61d5ef59870321f2909ccd",
+        "android_client_info": {
+          "package_name": "com.example.appcollagefotos"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtxvZBwmO3AWt45-3DzWCv3L6LeA0I6DI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

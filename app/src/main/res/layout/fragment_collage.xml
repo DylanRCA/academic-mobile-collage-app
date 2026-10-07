@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/collageRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark">
+
+    <!-- 12-Photo Full Screen Grid (3 Rows x 4 Columns) without Scroll -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCollageGrid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:padding="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_collage_post" />
+
+    <!-- Glassmorphism Watermark Overlay (Bottom-Left) -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardWatermark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        app:cardBackgroundColor="#800F172A"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="#40FFFFFF"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="8dp">
+
+            <ImageView
+                android:id="@+id/ivHeaderLogo"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="Event Logo"
+                android:scaleType="fitCenter"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tvHeaderEventName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                tools:text="Boda Mateo &amp; Lucía" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Hero Spotlight Overlay for Animation -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutHeroSpotlight"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#CC000000"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/heroCard"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cardBackgroundColor="@color/surface_dark"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.65"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@color/brand_accent"
+            app:strokeWidth="3dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/ivHeroPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="Spotlight Photo"
+                    android:scaleType="centerCrop" />
+
+                <LinearLayout
+                    android:id="@+id/layoutHeroFooter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#B30F172A"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <ImageView
+                        android:id="@+id/ivHeroLogo"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="10dp"
+                        android:contentDescription="Event Logo"
+                        android:scaleType="fitCenter"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/tvHeroMessage"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        tools:text="¡Muchas felicidades en este día tan especial!" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Centered Photo Viewer Modal (Opened when clicking a photo in the grid) -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutPhotoViewerModal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#D9000000"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/containerViewerCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.60">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardModalPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/surface_dark"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="16dp"
+                app:strokeColor="@color/brand_accent"
+                app:strokeWidth="2dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/ivModalPhoto"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:contentDescription="Photo Detail"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintDimensionRatio="16:9"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Scrollable Message Card Below Image -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardModalMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                app:cardBackgroundColor="#CC0F172A"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="16dp"
+                app:strokeColor="#40FFFFFF"
+                app:strokeWidth="1dp"
+                tools:visibility="visible">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxHeight="120dp">
+
+                    <TextView
+                        android:id="@+id/tvModalMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="14dp"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        tools:text="¡Muchas felicidades a los novios en este día tan especial! Que sean muy felices en esta nueva etapa juntos." />
+
+                </ScrollView>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

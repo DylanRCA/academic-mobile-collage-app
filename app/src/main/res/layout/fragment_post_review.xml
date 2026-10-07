@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark">
+
+    <ImageView
+        android:id="@+id/ivCapturedPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:contentDescription="Captured Photo"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@id/bottomControls"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivEventLogo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/shape_overlay_card"
+        android:contentDescription="Event Logo"
+        android:padding="6dp"
+        android:scaleType="fitCenter"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/ivCapturedPhoto"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomControls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/surface_dark"
+        android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilDedication"
+            style="@style/Widget.Material3.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Dedication message (optional)"
+            app:boxBackgroundColor="@color/input_filled_bg"
+            app:boxCornerRadiusBottomEnd="4dp"
+            app:boxCornerRadiusBottomStart="4dp"
+            app:boxCornerRadiusTopEnd="4dp"
+            app:boxCornerRadiusTopStart="4dp"
+            app:boxStrokeColor="@color/brand_accent"
+            app:counterEnabled="true"
+            app:counterMaxLength="80"
+            app:counterTextColor="@color/text_secondary_dark"
+            app:hintTextColor="@color/brand_accent_muted"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDedication"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences"
+                android:maxLength="80"
+                android:maxLines="2"
+                android:textColor="@color/white" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tvPublishError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/text_error"
+            android:textSize="13sp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tilDedication"
+            tools:text="Failed to publish post"
+            tools:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/llActionButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/tvPublishError">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRetry"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="Retry"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:cornerRadius="4dp"
+                app:strokeColor="@color/input_border_unfocused" />
+
+            <Space
+                android:layout_width="12dp"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSend"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="Send"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:backgroundTint="@color/brand_accent"
+                app:cornerRadius="4dp" />
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBarSending"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:indeterminateTint="@color/white"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/llActionButtons"
+            app:layout_constraintEnd_toEndOf="@id/llActionButtons"
+            app:layout_constraintStart_toStartOf="@id/llActionButtons"
+            app:layout_constraintTop_toTopOf="@id/llActionButtons" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

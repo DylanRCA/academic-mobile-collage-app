@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/previewView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Top Left Active User Badge -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardUserBadge"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:visibility="gone"
+        app:cardBackgroundColor="@color/overlay_card_bg"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/input_border_unfocused"
+        app:strokeWidth="1dp"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="14dp">
+
+            <TextView
+                android:id="@+id/tvUserPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                tools:text="📱 +51 987654321" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Top Right Expanded Logout Button -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        app:cardBackgroundColor="@color/overlay_card_bg"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/input_border_unfocused"
+        app:strokeWidth="1dp"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="14dp">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginEnd="6dp"
+                android:contentDescription="Cerrar Sesión"
+                android:src="@drawable/ic_logout" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cerrar sesión"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Center QR Viewfinder Frame Overlay -->
+    <View
+        android:id="@+id/viewFinderFrame"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:background="@drawable/shape_qr_frame"
+        app:layout_constraintBottom_toTopOf="@id/overlayCard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/overlayCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:background="@drawable/shape_overlay_card"
+        android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/tvScanTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Escanear Código QR del Evento"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvScanSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Apunta con la cámara al código QR"
+            android:textColor="@color/text_secondary_dark"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvScanTitle" />
+
+        <ProgressBar
+            android:id="@+id/progressBarLoading"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="16dp"
+            android:indeterminateTint="@color/brand_accent"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvScanSubtitle"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tvErrorMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/text_error"
+            android:textSize="13sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/progressBarLoading"
+            tools:text="Evento no encontrado"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

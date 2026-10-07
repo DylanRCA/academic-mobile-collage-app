@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Brand Palette & Surfaces (docs/02_visual_style.md) -->
+    <color name="bg_dark">#0F172A</color>
+    <color name="surface_dark">#1E293B</color>
+    <color name="surface_dark_variant">#334155</color>
+
+    <color name="brand_primary">#1E293B</color>
+    <color name="brand_accent">#2563EB</color>
+    <color name="brand_accent_muted">#3B82F6</color>
+
+    <color name="text_primary_dark">#F8FAFC</color>
+    <color name="text_secondary_dark">#94A3B8</color>
+    <color name="text_error">#EF4444</color>
+
+    <color name="overlay_card_bg">#CC0F172A</color>
+    <color name="input_filled_bg">#334155</color>
+    <color name="input_border_focused">#2563EB</color>
+    <color name="input_border_unfocused">#475569</color>
+</resources>

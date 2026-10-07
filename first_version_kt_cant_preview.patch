@@ -1,0 +1,42 @@
+Index: app/src/main/java/com/example/appcollagefotos/ui/screen/PostReviewScreen.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/appcollagefotos/ui/screen/PostReviewScreen.kt b/app/src/main/java/com/example/appcollagefotos/ui/screen/PostReviewScreen.kt
+--- a/app/src/main/java/com/example/appcollagefotos/ui/screen/PostReviewScreen.kt
++++ b/app/src/main/java/com/example/appcollagefotos/ui/screen/PostReviewScreen.kt	(date 1789919007310)
+@@ -35,10 +35,12 @@
+ import androidx.compose.ui.graphics.asImageBitmap
+ import androidx.compose.ui.layout.ContentScale
+ import androidx.compose.ui.text.font.FontWeight
++import androidx.compose.ui.tooling.preview.Preview
+ import androidx.compose.ui.unit.dp
+ import androidx.compose.ui.unit.sp
+ import com.example.appcollagefotos.data.model.Event
+ import com.example.appcollagefotos.data.repository.FirebaseRepository
++import com.example.appcollagefotos.ui.theme.AppCollageTheme
+ import com.example.appcollagefotos.util.ImageProcessor
+ import kotlinx.coroutines.Dispatchers
+ import kotlinx.coroutines.launch
+@@ -208,3 +210,20 @@
+         }
+     }
+ }
++
++@Preview(showBackground = true)
++@Composable
++fun PostReviewScreenPreview() {
++    val sampleBitmap = Bitmap.createBitmap(400, 400, Bitmap.Config.ARGB_8888)
++    val sampleEvent = Event(name = "Boda Mateo & Lucía")
++    val sampleRepo = FirebaseRepository()
++    AppCollageTheme {
++        PostReviewScreen(
++            bitmap = sampleBitmap,
++            event = sampleEvent,
++            repository = sampleRepo,
++            onRetry = {},
++            onSuccess = {}
++        )
++    }
++}
