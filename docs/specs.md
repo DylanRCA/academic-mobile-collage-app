@@ -1,5 +1,10 @@
 # Especificación de Requerimientos y Diseño de Software
 
+> [!NOTE]
+> **Updated Canonical Documentation:**
+> - [ARCHITECTURE_AND_FLOWS.md](file:///C:/Users/Dylan/AndroidStudioProjects/AppCollageFotosSNT/docs/ARCHITECTURE_AND_FLOWS.md) - Deep Links, QR Scan, Account Recovery, Camera, and 12-photo 3D Widescreen Collage.
+> - [PROJECT_STRUCTURE.md](file:///C:/Users/Dylan/AndroidStudioProjects/AppCollageFotosSNT/docs/PROJECT_STRUCTURE.md) - Complete Directory Tree, Java Source Code Breakdown, and Firebase Realtime Database Schema.
+
 ## Proyecto: Aplicación Móvil de Collage Interactivo para Eventos
 **Curso:** Desarrollo de Aplicaciones Móviles  
 **Plataforma de Desarrollo:** Android Studio  
