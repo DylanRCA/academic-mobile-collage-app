@@ -92,22 +92,22 @@ public class QRScannerFragment extends Fragment {
         if (binding == null) return;
         String currentUserId = repository.getCurrentUserId();
         if (currentUserId != null) {
-            binding.btnLogout.setVisibility(View.VISIBLE);
             repository.getUserProfile(currentUserId, new FirebaseRepository.SimpleCallback<User>() {
                 @Override
                 public void onSuccess(User user) {
                     if (getActivity() != null) {
                         getActivity().runOnUiThread(() -> {
                             if (binding == null) return;
-                            if (user != null && !TextUtils.isEmpty(user.getPhoneNumber())) {
-                                binding.tvUserPhone.setText("📱 " + user.getPhoneNumber());
+                            if (user != null && (!TextUtils.isEmpty(user.getPhoneNumber()) || !TextUtils.isEmpty(user.getEmail()))) {
+                                String phoneOrEmail = !TextUtils.isEmpty(user.getPhoneNumber()) ?
+                                        "📱 " + user.getPhoneNumber() : "✉️ " + user.getEmail();
+                                binding.tvUserPhone.setText(phoneOrEmail);
                                 binding.cardUserBadge.setVisibility(View.VISIBLE);
-                            } else if (user != null && !TextUtils.isEmpty(user.getEmail())) {
-                                binding.tvUserPhone.setText("✉️ " + user.getEmail());
-                                binding.cardUserBadge.setVisibility(View.VISIBLE);
+                                binding.btnLogout.setVisibility(View.VISIBLE);
                             } else {
                                 binding.tvUserPhone.setText("👤 Sin sesión activa");
                                 binding.cardUserBadge.setVisibility(View.VISIBLE);
+                                binding.btnLogout.setVisibility(View.GONE);
                             }
                         });
                     }
@@ -120,15 +120,16 @@ public class QRScannerFragment extends Fragment {
                             if (binding != null) {
                                 binding.tvUserPhone.setText("👤 Sin sesión activa");
                                 binding.cardUserBadge.setVisibility(View.VISIBLE);
+                                binding.btnLogout.setVisibility(View.GONE);
                             }
                         });
                     }
                 }
             });
         } else {
-            binding.btnLogout.setVisibility(View.GONE);
             binding.tvUserPhone.setText("👤 Sin sesión activa");
             binding.cardUserBadge.setVisibility(View.VISIBLE);
+            binding.btnLogout.setVisibility(View.GONE);
         }
     }
 

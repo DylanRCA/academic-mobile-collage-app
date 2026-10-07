@@ -1,5 +1,6 @@
 package com.example.appcollagefotos.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -42,7 +43,7 @@ public class LoginFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(@NonNull android.content.Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof LoginListener) {
             this.listener = (LoginListener) context;
@@ -91,6 +92,31 @@ public class LoginFragment extends Fragment {
 
         setLoading(true);
 
+        repository.findUserByPhoneNumber(phoneNumber, new FirebaseRepository.SimpleCallback<User>() {
+            @Override
+            public void onSuccess(User existingUser) {
+                if (existingUser != null) {
+                    if (getActivity() != null) {
+                        getActivity().runOnUiThread(() -> {
+                            setLoading(false);
+                            if (listener != null) {
+                                listener.onUserRegistered(event, existingUser);
+                            }
+                        });
+                    }
+                } else {
+                    createNewUserAccount(phoneNumber, email);
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                createNewUserAccount(phoneNumber, email);
+            }
+        });
+    }
+
+    private void createNewUserAccount(String phoneNumber, String email) {
         repository.signInAnonymouslyIfNeeded(new FirebaseRepository.SimpleCallback<String>() {
             @Override
             public void onSuccess(String userId) {
@@ -100,9 +126,9 @@ public class LoginFragment extends Fragment {
                         if (getActivity() != null) {
                             getActivity().runOnUiThread(() -> {
                                 setLoading(false);
-                                User user = new User(userId, phoneNumber, email, null);
+                                User newUser = new User(userId, phoneNumber, email, null);
                                 if (listener != null) {
-                                    listener.onUserRegistered(event, user);
+                                    listener.onUserRegistered(event, newUser);
                                 }
                             });
                         }

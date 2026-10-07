@@ -303,6 +303,44 @@ public class FirebaseRepository {
         });
     }
 
+    public void findUserByPhoneNumber(String phoneNumber, SimpleCallback<User> callback) {
+        if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
+            if (callback != null) callback.onSuccess(null);
+            return;
+        }
+
+        database.child("users").orderByChild("phoneNumber").equalTo(phoneNumber.trim())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (!snapshot.exists()) {
+                            if (callback != null) {
+                                callback.onSuccess(null);
+                            }
+                            return;
+                        }
+                        User existingUser = null;
+                        for (DataSnapshot child : snapshot.getChildren()) {
+                            existingUser = child.getValue(User.class);
+                            if (existingUser != null) {
+                                existingUser.setId(child.getKey());
+                                break;
+                            }
+                        }
+                        if (callback != null) {
+                            callback.onSuccess(existingUser);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        if (callback != null) {
+                            callback.onError(error.toException());
+                        }
+                    }
+                });
+    }
+
     public void signOut() {
         auth.signOut();
     }

@@ -40,6 +40,29 @@ public class CollageAdapter extends ListAdapter<Post, CollageAdapter.PostViewHol
         this.onPhotoClickListener = listener;
     }
 
+    public void flipCardAtPosition(RecyclerView recyclerView, int position, Post newPost) {
+        if (recyclerView == null || position < 0 || position >= getItemCount()) return;
+
+        RecyclerView.ViewHolder holder = recyclerView.findViewHolderForAdapterPosition(position);
+        if (holder instanceof PostViewHolder) {
+            PostViewHolder postViewHolder = (PostViewHolder) holder;
+            View card = postViewHolder.binding.cardPost;
+
+            card.animate()
+                    .rotationY(90f)
+                    .setDuration(250)
+                    .withEndAction(() -> {
+                        postViewHolder.bind(newPost, highlightedPostId, onPhotoClickListener);
+                        card.setRotationY(-90f);
+                        card.animate()
+                                .rotationY(0f)
+                                .setDuration(250)
+                                .start();
+                    })
+                    .start();
+        }
+    }
+
     private static final DiffUtil.ItemCallback<Post> POST_DIFF_CALLBACK = new DiffUtil.ItemCallback<Post>() {
         @Override
         public boolean areItemsTheSame(@NonNull Post oldItem, @NonNull Post newItem) {
@@ -72,7 +95,7 @@ public class CollageAdapter extends ListAdapter<Post, CollageAdapter.PostViewHol
     }
 
     public static class PostViewHolder extends RecyclerView.ViewHolder {
-        private final ItemCollagePostBinding binding;
+        public final ItemCollagePostBinding binding;
 
         public PostViewHolder(@NonNull ItemCollagePostBinding binding) {
             super(binding.getRoot());

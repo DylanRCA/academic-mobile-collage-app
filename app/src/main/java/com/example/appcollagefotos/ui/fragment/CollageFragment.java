@@ -24,6 +24,7 @@ import com.example.appcollagefotos.util.ImageProcessor;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 public class CollageFragment extends Fragment {
@@ -31,6 +32,7 @@ public class CollageFragment extends Fragment {
     private static final String ARG_EVENT = "arg_event";
     private static final String ARG_PUBLISHED_POST = "arg_published_post";
     private static final int MAX_GRID_POSTS = 12;
+    private static final long FLIP_INTERVAL_MS = 5000L;
 
     private FragmentCollageBinding binding;
     private Event event;
@@ -39,10 +41,14 @@ public class CollageFragment extends Fragment {
     private final CollageAdapter adapter = new CollageAdapter();
 
     private final List<Post> gridPosts = new ArrayList<>();
+    private final List<Post> allHistoricalPosts = new ArrayList<>();
     private final Set<String> knownPostIds = new HashSet<>();
+    private final Random random = new Random();
+
     private boolean isInitialLoad = true;
     private FirebaseRepository.ListenerRegistration listenerRegistration;
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
+    private Runnable flipRunnable;
 
     public static CollageFragment newInstance(Event event, Post publishedPost) {
         CollageFragment fragment = new CollageFragment();
@@ -158,6 +164,9 @@ public class CollageFragment extends Fragment {
     private void handlePostsUpdate(List<Post> latestPosts) {
         if (latestPosts == null || latestPosts.isEmpty()) return;
 
+        allHistoricalPosts.clear();
+        allHistoricalPosts.addAll(latestPosts);
+
         if (isInitialLoad) {
             isInitialLoad = false;
             gridPosts.clear();
@@ -188,6 +197,10 @@ public class CollageFragment extends Fragment {
                 }
                 adapter.submitList(new ArrayList<>(gridPosts));
             }
+
+            if (allHistoricalPosts.size() > MAX_GRID_POSTS) {
+                startAutomaticFlipTimer();
+            }
             return;
         }
 
@@ -208,6 +221,52 @@ public class CollageFragment extends Fragment {
 
             animateSpotlightToGridSlot(newest);
         }
+
+        if (allHistoricalPosts.size() > MAX_GRID_POSTS) {
+            startAutomaticFlipTimer();
+        }
+    }
+
+    private void startAutomaticFlipTimer() {
+        if (flipRunnable != null) {
+            mainHandler.removeCallbacks(flipRunnable);
+        }
+
+        flipRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (binding == null || !isAdded()) return;
+
+                if (allHistoricalPosts.size() > MAX_GRID_POSTS && gridPosts.size() >= MAX_GRID_POSTS) {
+                    // Random target position between 1 and 11 (excluding slot [0,0])
+                    int targetPosition = 1 + random.nextInt(gridPosts.size() - 1);
+
+                    List<Post> candidates = new ArrayList<>();
+                    for (Post p : allHistoricalPosts) {
+                        boolean isVisible = false;
+                        for (Post visible : gridPosts) {
+                            if (visible.getId() != null && visible.getId().equals(p.getId())) {
+                                isVisible = true;
+                                break;
+                            }
+                        }
+                        if (!isVisible) {
+                            candidates.add(p);
+                        }
+                    }
+
+                    if (!candidates.isEmpty()) {
+                        Post nextPost = candidates.get(random.nextInt(candidates.size()));
+                        gridPosts.set(targetPosition, nextPost);
+                        adapter.flipCardAtPosition(binding.rvCollageGrid, targetPosition, nextPost);
+                    }
+                }
+
+                mainHandler.postDelayed(this, FLIP_INTERVAL_MS);
+            }
+        };
+
+        mainHandler.postDelayed(flipRunnable, FLIP_INTERVAL_MS);
     }
 
     private void animateSpotlightToGridSlot(Post post) {
@@ -330,6 +389,10 @@ public class CollageFragment extends Fragment {
         super.onDestroyView();
         if (listenerRegistration != null) {
             listenerRegistration.remove();
+        }
+        if (flipRunnable != null) {
+            mainHandler.removeCallbacks(flipRunnable);
+            flipRunnable = null;
         }
         mainHandler.removeCallbacksAndMessages(null);
         binding = null;

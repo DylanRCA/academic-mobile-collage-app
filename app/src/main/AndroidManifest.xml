@@ -24,6 +24,29 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <!-- GitHub Releases Direct APK QR Deep Link -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
+                    android:host="github.com"
+                    android:pathPrefix="/DylanRCA/album-mobile-app-apk/releases/download" />
+            </intent-filter>
+
+            <!-- Custom Scheme Deep Link (appcollage://event/eventId) -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="appcollage"
+                    android:host="event" />
+            </intent-filter>
         </activity>
     </application>
 

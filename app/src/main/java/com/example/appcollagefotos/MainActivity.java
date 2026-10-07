@@ -87,23 +87,31 @@ public class MainActivity extends AppCompatActivity implements
         Intent intent = getIntent();
         Uri data = intent != null ? intent.getData() : null;
 
-        if (data != null && data.getLastPathSegment() != null) {
-            String eventId = data.getLastPathSegment();
-            repository.getEvent(eventId, new FirebaseRepository.SimpleCallback<Event>() {
-                @Override
-                public void onSuccess(Event event) {
-                    if (event != null && event.isActive()) {
-                        runOnUiThread(() -> checkUserAndNavigate(event));
-                    } else {
+        if (data != null) {
+            String eventId = data.getQueryParameter("eventId");
+            if (eventId == null || eventId.trim().isEmpty()) {
+                eventId = data.getLastPathSegment();
+            }
+
+            if (eventId != null && !eventId.trim().isEmpty()) {
+                repository.getEvent(eventId.trim(), new FirebaseRepository.SimpleCallback<Event>() {
+                    @Override
+                    public void onSuccess(Event event) {
+                        if (event != null && event.isActive()) {
+                            runOnUiThread(() -> checkUserAndNavigate(event));
+                        } else {
+                            runOnUiThread(() -> showQRScannerFragment());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
                         runOnUiThread(() -> showQRScannerFragment());
                     }
-                }
-
-                @Override
-                public void onError(Exception e) {
-                    runOnUiThread(() -> showQRScannerFragment());
-                }
-            });
+                });
+            } else {
+                showQRScannerFragment();
+            }
         } else {
             showQRScannerFragment();
         }
