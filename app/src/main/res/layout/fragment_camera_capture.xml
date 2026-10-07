@@ -47,7 +47,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="center"
-            android:contentDescription="Gallery"
+            android:contentDescription="@string/camera_gallery_desc"
             android:src="@drawable/ic_gallery" />
 
     </com.google.android.material.card.MaterialCardView>
@@ -99,7 +99,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="center"
-            android:contentDescription="Switch Camera"
+            android:contentDescription="@string/camera_switch_desc"
             android:src="@drawable/ic_switch_camera" />
 
     </com.google.android.material.card.MaterialCardView>

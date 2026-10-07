@@ -49,7 +49,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginEnd="8dp"
-                android:contentDescription="Event Logo"
+                android:contentDescription="@string/collage_watermark_desc"
                 android:scaleType="fitCenter"
                 android:visibility="gone"
                 tools:visibility="visible" />
@@ -102,7 +102,7 @@
                     android:id="@+id/ivHeroPhoto"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:contentDescription="Spotlight Photo"
+                    android:contentDescription="@string/collage_photo_desc"
                     android:scaleType="centerCrop" />
 
                 <LinearLayout
@@ -120,7 +120,7 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:layout_marginEnd="10dp"
-                        android:contentDescription="Event Logo"
+                        android:contentDescription="@string/collage_watermark_desc"
                         android:scaleType="fitCenter"
                         android:visibility="gone"
                         tools:visibility="visible" />
@@ -186,7 +186,7 @@
                         android:id="@+id/ivModalPhoto"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:contentDescription="Photo Detail"
+                        android:contentDescription="@string/collage_photo_desc"
                         android:scaleType="centerCrop"
                         app:layout_constraintDimensionRatio="16:9"
                         app:layout_constraintEnd_toEndOf="parent"

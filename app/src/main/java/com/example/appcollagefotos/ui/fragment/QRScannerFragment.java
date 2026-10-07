@@ -20,6 +20,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.appcollagefotos.MainActivity;
 import com.example.appcollagefotos.data.model.Event;
 import com.example.appcollagefotos.data.model.User;
 import com.example.appcollagefotos.data.repository.FirebaseRepository;
@@ -74,7 +75,11 @@ public class QRScannerFragment extends Fragment {
         updateUserSessionState();
 
         binding.btnLogout.setOnClickListener(v -> {
-            repository.signOut();
+            if (getActivity() instanceof MainActivity) {
+                ((MainActivity) getActivity()).clearUserSession();
+            } else {
+                repository.signOut();
+            }
             if (binding != null) {
                 binding.btnLogout.setVisibility(View.GONE);
                 binding.tvUserPhone.setText("👤 Sin sesión activa");
@@ -90,6 +95,17 @@ public class QRScannerFragment extends Fragment {
 
     private void updateUserSessionState() {
         if (binding == null) return;
+
+        String savedPhone = (getActivity() instanceof MainActivity) ?
+                ((MainActivity) getActivity()).getSavedUserPhone() : null;
+
+        if (!TextUtils.isEmpty(savedPhone)) {
+            binding.tvUserPhone.setText("📱 " + savedPhone);
+            binding.cardUserBadge.setVisibility(View.VISIBLE);
+            binding.btnLogout.setVisibility(View.VISIBLE);
+            return;
+        }
+
         String currentUserId = repository.getCurrentUserId();
         if (currentUserId != null) {
             repository.getUserProfile(currentUserId, new FirebaseRepository.SimpleCallback<User>() {
@@ -104,6 +120,9 @@ public class QRScannerFragment extends Fragment {
                                 binding.tvUserPhone.setText(phoneOrEmail);
                                 binding.cardUserBadge.setVisibility(View.VISIBLE);
                                 binding.btnLogout.setVisibility(View.VISIBLE);
+                                if (getActivity() instanceof MainActivity && !TextUtils.isEmpty(user.getPhoneNumber())) {
+                                    ((MainActivity) getActivity()).saveUserPhone(user.getPhoneNumber());
+                                }
                             } else {
                                 binding.tvUserPhone.setText("👤 Sin sesión activa");
                                 binding.cardUserBadge.setVisibility(View.VISIBLE);

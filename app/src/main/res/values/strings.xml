@@ -1,3 +1,40 @@
 <resources>
     <string name="app_name">AppCollageFotos</string>
+
+    <!-- Main Activity Permissions -->
+    <string name="permission_title">📷 Acceso a la Cámara Requerido</string>
+    <string name="permission_subtitle">Para capturar tus mejores momentos y escanear códigos QR de eventos, necesitamos acceso a tu cámara.</string>
+    <string name="permission_button">Conceder Permiso de Cámara</string>
+
+    <!-- QR Scanner Screen -->
+    <string name="qr_title">Escanear QR del Evento</string>
+    <string name="qr_subtitle">Apunta con la cámara al código QR para unirte a la celebración</string>
+    <string name="qr_logout">Cerrar sesión</string>
+    <string name="qr_no_session">👤 Sin sesión activa</string>
+
+    <!-- Login / Registration Screen -->
+    <string name="login_title">¡Bienvenido a la Celebración!</string>
+    <string name="login_subtitle">Regístrate para compartir tus fotos y felicitaciones en el muro en tiempo real</string>
+    <string name="login_phone_hint">📱 Número de Teléfono (Usuario)</string>
+    <string name="login_email_hint">✉️ Correo Electrónico</string>
+    <string name="login_button">🚀 Unirme y Tomar Foto</string>
+    <string name="login_err_phone">Por favor ingresa un número de teléfono válido (mínimo 7 dígitos).</string>
+    <string name="login_err_email">Por favor ingresa un correo electrónico válido.</string>
+
+    <!-- Camera Screen -->
+    <string name="camera_switch_desc">Cambiar cámara</string>
+    <string name="camera_gallery_desc">Elegir de la galería</string>
+    <string name="camera_err_process">No se pudo procesar la foto capturada.</string>
+    <string name="camera_err_gallery">No se pudo procesar la imagen seleccionada de la galería.</string>
+
+    <!-- Post Review Screen -->
+    <string name="review_dedication_hint">✨ Escribe un mensaje o felicitación (opcional)...</string>
+    <string name="review_btn_retry">📸 Repetir Foto</string>
+    <string name="review_btn_send">✨ Publicar en el Muro</string>
+    <string name="review_err_publish">No se pudo publicar tu foto en este momento.</string>
+
+    <!-- Collage Screen -->
+    <string name="collage_watermark_desc">Logo del evento</string>
+    <string name="collage_photo_desc">Foto del evento</string>
+    <string name="collage_message_desc">Mensaje adjunto</string>
 </resources>

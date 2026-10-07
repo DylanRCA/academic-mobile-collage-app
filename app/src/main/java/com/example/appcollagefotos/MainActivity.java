@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -87,44 +88,73 @@ public class MainActivity extends AppCompatActivity implements
         Intent intent = getIntent();
         Uri data = intent != null ? intent.getData() : null;
 
+        String targetEventId = null;
         if (data != null) {
-            String eventId = data.getQueryParameter("eventId");
-            if (eventId == null || eventId.trim().isEmpty()) {
-                eventId = data.getLastPathSegment();
+            targetEventId = data.getQueryParameter("eventId");
+            if (targetEventId == null || targetEventId.trim().isEmpty()) {
+                targetEventId = data.getLastPathSegment();
             }
+        }
 
-            if (eventId != null && !eventId.trim().isEmpty()) {
-                repository.getEvent(eventId.trim(), new FirebaseRepository.SimpleCallback<Event>() {
-                    @Override
-                    public void onSuccess(Event event) {
-                        if (event != null && event.isActive()) {
-                            runOnUiThread(() -> checkUserAndNavigate(event));
-                        } else {
-                            runOnUiThread(() -> showQRScannerFragment());
-                        }
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
+        if (targetEventId != null && !targetEventId.trim().isEmpty()) {
+            final String finalEventId = targetEventId.trim();
+            repository.getEvent(finalEventId, new FirebaseRepository.SimpleCallback<Event>() {
+                @Override
+                public void onSuccess(Event event) {
+                    if (event != null && event.isActive()) {
+                        runOnUiThread(() -> checkUserAndNavigate(event));
+                    } else {
                         runOnUiThread(() -> showQRScannerFragment());
                     }
-                });
-            } else {
-                showQRScannerFragment();
-            }
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    runOnUiThread(() -> showQRScannerFragment());
+                }
+            });
         } else {
             showQRScannerFragment();
         }
     }
 
     private void checkUserAndNavigate(Event event) {
+        String savedPhone = getSavedUserPhone();
         String currentUserId = repository.getCurrentUserId();
+
+        if (!TextUtils.isEmpty(savedPhone)) {
+            repository.findUserByPhoneNumber(savedPhone, new FirebaseRepository.SimpleCallback<User>() {
+                @Override
+                public void onSuccess(User user) {
+                    runOnUiThread(() -> {
+                        if (user != null) {
+                            showCameraCaptureFragment(event);
+                        } else {
+                            checkActiveUserId(event, currentUserId);
+                        }
+                    });
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    runOnUiThread(() -> checkActiveUserId(event, currentUserId));
+                }
+            });
+        } else {
+            checkActiveUserId(event, currentUserId);
+        }
+    }
+
+    private void checkActiveUserId(Event event, String currentUserId) {
         if (currentUserId != null) {
             repository.getUserProfile(currentUserId, new FirebaseRepository.SimpleCallback<User>() {
                 @Override
                 public void onSuccess(User user) {
                     runOnUiThread(() -> {
-                        if (user != null && user.getPhoneNumber() != null && !user.getPhoneNumber().isEmpty()) {
+                        if (user != null && (!TextUtils.isEmpty(user.getPhoneNumber()) || !TextUtils.isEmpty(user.getEmail()))) {
+                            if (!TextUtils.isEmpty(user.getPhoneNumber())) {
+                                saveUserPhone(user.getPhoneNumber());
+                            }
                             showCameraCaptureFragment(event);
                         } else {
                             showLoginFragment(event);
@@ -140,6 +170,28 @@ public class MainActivity extends AppCompatActivity implements
         } else {
             showLoginFragment(event);
         }
+    }
+
+    public void saveUserPhone(String phone) {
+        if (phone != null) {
+            getSharedPreferences("app_prefs", MODE_PRIVATE)
+                    .edit()
+                    .putString("user_phone", phone)
+                    .apply();
+        }
+    }
+
+    public String getSavedUserPhone() {
+        return getSharedPreferences("app_prefs", MODE_PRIVATE)
+                .getString("user_phone", null);
+    }
+
+    public void clearUserSession() {
+        getSharedPreferences("app_prefs", MODE_PRIVATE)
+                .edit()
+                .remove("user_phone")
+                .apply();
+        repository.signOut();
     }
 
     private void showQRScannerFragment() {
@@ -183,6 +235,9 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onUserRegistered(Event event, User user) {
+        if (user != null && !TextUtils.isEmpty(user.getPhoneNumber())) {
+            saveUserPhone(user.getPhoneNumber());
+        }
         showCameraCaptureFragment(event);
     }
 

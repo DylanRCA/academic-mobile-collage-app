@@ -78,13 +78,13 @@
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_marginEnd="6dp"
-                android:contentDescription="Cerrar Sesión"
+                android:contentDescription="@string/qr_logout"
                 android:src="@drawable/ic_logout" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cerrar sesión"
+                android:text="@string/qr_logout"
                 android:textColor="@color/white"
                 android:textSize="13sp"
                 android:textStyle="bold" />
@@ -119,7 +119,7 @@
             android:id="@+id/tvScanTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Escanear Código QR del Evento"
+            android:text="@string/qr_title"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -132,7 +132,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Apunta con la cámara al código QR"
+            android:text="@string/qr_subtitle"
             android:textColor="@color/text_secondary_dark"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
